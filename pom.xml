@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	 <modelVersion>4.0.0</modelVersion>
+	 <groupId>chav1961</groupId>
+	 <artifactId>purelib.ext</artifactId>
+	 <version>0.0.1-SNAPSHOT</version>
+	 <packaging>pom</packaging>
+	 <name>Pure lib ext</name>
+	 <description>Pure libraray extensionDistributed smart house based in EPS826</description>
+
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <pg-jdbc-version>9.1-901-1.jdbc4</pg-jdbc-version>
+	    <tools-path>C:\Program Files\Java\jdk1.8.0_31\lib\tools.jar</tools-path>
+	    <project.parent.version>0.0.1-SNAPSHOT</project.parent.version>
+	</properties>
+
+    <repositories>
+        <repository>
+            <id>Apache repos</id>
+            <url>http://mvnrepository.com/</url>
+        </repository>
+        <repository>
+            <id>jSSC repos</id>
+			<url>https://mvnrepository.com/artifact/org.scream3r/jssc</url>
+        </repository>
+        <repository>
+            <id>SMPP repos</id>
+			<url>https://mvnrepository.com/artifact/com.adenki/smppapi</url>
+        </repository>
+    </repositories>
+  
+	<dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+	</dependencies>
+  
+  <modules>
+  	<module>utilities</module>
+  </modules>
+</project>
