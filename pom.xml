@@ -35,9 +35,20 @@
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>chav1961.purelib</groupId>
+            <artifactId>core</artifactId>
+            <version>[0,9)</version>
+        </dependency>
 	</dependencies>
   
   <modules>
   	<module>utilities</module>
+  	<module>filesystems.SVN</module>
+  	<module>filesystems.svn</module>
+  	<module>filesystems.rest</module>
+  	<module>filesystems.git</module>
+  	<module>filesystems.s3</module>
+  	<module>filesystems.webdav</module>
   </modules>
 </project>
