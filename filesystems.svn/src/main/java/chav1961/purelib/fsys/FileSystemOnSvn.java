@@ -46,6 +46,7 @@ import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 
 import chav1961.purelib.basic.Utils;
+import chav1961.purelib.basic.exceptions.EnvironmentException;
 import chav1961.purelib.fsys.interfaces.DataWrapperInterface;
 import chav1961.purelib.fsys.interfaces.FileSystemInterface;
 
@@ -90,11 +91,6 @@ public class FileSystemOnSvn extends AbstractFileSystem {
 		this.repo = another.repo;
 	}
 
-	@Override
-	public boolean canServe(final String uriSchema) {
-		return uriSchema.startsWith("svn");
-	}
-	
 	@Override
 	public FileSystemInterface clone() {
 		return new FileSystemOnSvn(this);
@@ -277,6 +273,18 @@ public class FileSystemOnSvn extends AbstractFileSystem {
             };
         }
     }
+
+	@Override
+	public boolean canServe(URI uriSchema) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

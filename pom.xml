@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	 <modelVersion>4.0.0</modelVersion>
-	 <groupId>chav1961</groupId>
+	 <groupId>com.github.chav1961</groupId>
 	 <artifactId>purelib.ext</artifactId>
 	 <version>0.0.1-SNAPSHOT</version>
 	 <packaging>pom</packaging>
@@ -36,15 +36,13 @@
             <version>2.3.1</version>
         </dependency>
         <dependency>
-            <groupId>chav1961.purelib</groupId>
-            <artifactId>core</artifactId>
-            <version>[0,9)</version>
+            <groupId>com.github.chav1961</groupId>
+            <artifactId>purelib</artifactId>
+            <version>0.0.2</version>
         </dependency>
 	</dependencies>
   
   <modules>
-  	<module>utilities</module>
-  	<module>filesystems.SVN</module>
   	<module>filesystems.svn</module>
   	<module>filesystems.rest</module>
   	<module>filesystems.git</module>

@@ -29,6 +29,7 @@ import javax.ws.rs.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import chav1961.purelib.basic.Utils;
+import chav1961.purelib.basic.exceptions.EnvironmentException;
 import chav1961.purelib.fsys.interfaces.DataWrapperInterface;
 import chav1961.purelib.fsys.interfaces.FileSystemInterface;
 import chav1961.purelib.fsys.interfaces.RestMethodWrapperInterface;
@@ -55,31 +56,31 @@ public class FileSystemOnREST extends AbstractFileSystem {
 		}
 		this.restDir = location;
 		
-		for (Class<?> cl : Utils.loadClasses(packages)) {
-			if (cl.isAnnotationPresent(Path.class)) {
-				System.err.println("Item="+cl.getName());
-				for (Method m : cl.getMethods()) {
-					if (m.isAnnotationPresent(GET.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.GET,paths);
-					}
-					if (m.isAnnotationPresent(POST.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.POST,paths);
-					}
-					if (m.isAnnotationPresent(PUT.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.PUT,paths);
-					}
-					if (m.isAnnotationPresent(DELETE.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.DELETE,paths);
-					}
-					if (m.isAnnotationPresent(HEAD.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.HEAD,paths);
-					}
-					if (m.isAnnotationPresent(OPTIONS.class)) {
-						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.OPTIONS,paths);
-					}
-				}
-			}
-		}
+//		for (Class<?> cl : Utils.loadClasses(packages)) {
+//			if (cl.isAnnotationPresent(Path.class)) {
+//				System.err.println("Item="+cl.getName());
+//				for (Method m : cl.getMethods()) {
+//					if (m.isAnnotationPresent(GET.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.GET,paths);
+//					}
+//					if (m.isAnnotationPresent(POST.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.POST,paths);
+//					}
+//					if (m.isAnnotationPresent(PUT.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.PUT,paths);
+//					}
+//					if (m.isAnnotationPresent(DELETE.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.DELETE,paths);
+//					}
+//					if (m.isAnnotationPresent(HEAD.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.HEAD,paths);
+//					}
+//					if (m.isAnnotationPresent(OPTIONS.class)) {
+//						processMethod(cl.getAnnotation(Path.class).value(),m,RestMethodWrapperInterface.RequestMethod.OPTIONS,paths);
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	private FileSystemOnREST(final FileSystemOnREST another) {
@@ -87,12 +88,6 @@ public class FileSystemOnREST extends AbstractFileSystem {
 		this.paths.putAll(another.paths);
 	}
 	
-
-	@Override
-	public boolean canServe(String scheme) {
-		return "rest".equals(scheme);
-	}
-
 	@Override
 	public FileSystemInterface clone() {
 		return new FileSystemOnREST(this);
@@ -374,5 +369,17 @@ public class FileSystemOnREST extends AbstractFileSystem {
 			// TODO Auto-generated method stub
 			return null;
 		}		
+	}
+
+	@Override
+	public boolean canServe(URI uriSchema) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

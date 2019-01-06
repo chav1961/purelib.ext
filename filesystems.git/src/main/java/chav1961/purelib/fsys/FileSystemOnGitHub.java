@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import chav1961.purelib.basic.Utils;
+import chav1961.purelib.basic.exceptions.EnvironmentException;
 import chav1961.purelib.fsys.interfaces.DataWrapperInterface;
 import chav1961.purelib.fsys.interfaces.FileSystemInterface;
 import chav1961.purelib.streams.interfaces.JsonSaxHandler;
@@ -44,11 +45,6 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 	private FileSystemOnGitHub(final FileSystemOnGitHub another) {
 		super(another);
 		this.rootPath = another.rootPath;
-	}
-
-	@Override
-	public boolean canServe(final String scheme) {
-		return "github".equals(scheme);
 	}
 
 	@Override
@@ -107,14 +103,14 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 
 		@Override
 		public Map<String, Object> getAttributes() throws IOException {
-			final Map<String, Object>	info = Utils.mkMap(ATTR_SIZE, !isDirectory ? content.getBytes().length : 0
-												, ATTR_NAME, node.getNodeName()
-												, ATTR_LASTMODIFIED, 0
-												, ATTR_DIR, isDirectory
-												, ATTR_EXIST, true
-												, ATTR_CANREAD, true
-												, ATTR_CANWRITE, false
-											);
+//			final Map<String, Object>	info = Utils.mkMap(ATTR_SIZE, !isDirectory ? content.getBytes().length : 0
+//												, ATTR_NAME, node.getNodeName()
+//												, ATTR_LASTMODIFIED, 0
+//												, ATTR_DIR, isDirectory
+//												, ATTR_EXIST, true
+//												, ATTR_CANREAD, true
+//												, ATTR_CANWRITE, false
+//											);
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -122,5 +118,15 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 		@Override
 		public void linkAttributes(Map<String, Object> attributes) throws IOException {
 		}
+	}
+
+	@Override
+	public boolean canServe(URI uriSchema) {
+		return false;
+	}
+
+	@Override
+	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
+		return null;
 	}
 }
