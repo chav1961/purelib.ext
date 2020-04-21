@@ -26,7 +26,6 @@ import java.util.jar.JarInputStream;
 import java.util.regex.Pattern;
 
 import javax.ws.rs.*;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import chav1961.purelib.basic.Utils;
 import chav1961.purelib.basic.exceptions.EnvironmentException;
@@ -35,7 +34,6 @@ import chav1961.purelib.fsys.interfaces.FileSystemInterface;
 import chav1961.purelib.fsys.interfaces.RestMethodWrapperInterface;
 import chav1961.purelib.fsys.interfaces.RestMethodWrapperInterface.RequestMethod;
 
-@XmlRootElement
 @Path("/")
 public class FileSystemOnREST extends AbstractFileSystem {
 	private static final Map<Class<?>,Class<?>>	PRIMITIVE2WRAPPERS = new HashMap<Class<?>,Class<?>>(){{}};
@@ -152,7 +150,7 @@ public class FileSystemOnREST extends AbstractFileSystem {
 
 		final Class<?>	returned = m.getReturnType();
 		
-		if (returned != Void.class && returned != String.class && !returned.isAnnotationPresent(XmlRootElement.class)) {
+		if (returned != Void.class && returned != String.class/* && !returned.isAnnotationPresent(XmlRootElement.class)*/) {
 			throw new IllegalArgumentException("Class ["+m.getDeclaringClass()+"] method ["+m.getName()+"] return type ["+returned.getName()+"] need be void, String or any class annotated with @XmlRootElement");
 		}
 		else {
