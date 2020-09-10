@@ -14,6 +14,7 @@ public class PureLibClient {
 	static {
 		try{ROOT_LOCALIZER = LocalizerFactory.getLocalizer(URI.create(Localizer.LOCALIZER_SCHEME+":xml:root://"+PureLibClient.class.getCanonicalName()+"/i18n/localization.xml"));
 			PureLibSettings.PURELIB_LOCALIZER.add(ROOT_LOCALIZER);
+			ROOT_LOCALIZER.add(PureLibSettings.PURELIB_LOCALIZER);
 		} catch (LocalizationException e) {
 			throw new PreparationException("Registration of localizer in module ["+PureLibClient.class.getModule().getName()+"] failed: "+e.getLocalizedMessage(),e);
 		}

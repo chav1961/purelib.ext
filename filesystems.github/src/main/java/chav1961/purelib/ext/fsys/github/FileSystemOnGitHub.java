@@ -10,22 +10,28 @@ import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import chav1961.purelib.basic.PureLibSettings;
+import chav1961.purelib.basic.URIUtils;
 import chav1961.purelib.basic.exceptions.EnvironmentException;
+import chav1961.purelib.basic.interfaces.LoggerFacade;
+import chav1961.purelib.basic.interfaces.LoggerFacade.Severity;
 import chav1961.purelib.ext.fsys.github.internal.PureLibClient;
 import chav1961.purelib.fsys.AbstractFileSystem;
 import chav1961.purelib.fsys.FileSystemFactory;
 import chav1961.purelib.fsys.FileSystemInMemory;
 import chav1961.purelib.fsys.interfaces.DataWrapperInterface;
 import chav1961.purelib.fsys.interfaces.FileSystemInterface;
+import chav1961.purelib.fsys.interfaces.FileSystemInterfaceDescriptor;
+import chav1961.purelib.i18n.PureLibLocalizer;
 
-public class FileSystemOnGitHub extends AbstractFileSystem {
+public class FileSystemOnGitHub extends AbstractFileSystem implements FileSystemInterfaceDescriptor {
 	public static final URI		SERVE = URI.create(FileSystemInterface.FILESYSTEM_URI_SCHEME+":github:");
 	
-	private static final String	DESCRIPTION = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_DESCRIPTION_SUFFIX;
-	private static final String	VENDOR = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_VENDOR_SUFFIX;
-	private static final String	LICENSE = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_SUFFIX;
-	private static final String	LICENSE_CONTENT = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_CONTENT_SUFFIX;
-	private static final String	HELP = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_HELP_SUFFIX;
+	private static final String	DESCRIPTION = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemOnGitHub.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_DESCRIPTION_SUFFIX;
+	private static final String	VENDOR = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemOnGitHub.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_VENDOR_SUFFIX;
+	private static final String	LICENSE = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemOnGitHub.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_SUFFIX;
+	private static final String	LICENSE_CONTENT = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemOnGitHub.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_CONTENT_SUFFIX;
+	private static final String	HELP = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemOnGitHub.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_HELP_SUFFIX;
 	private static final Icon	ICON = new ImageIcon(FileSystemInMemory.class.getResource("memoryIcon.png"));
 
 	static {
@@ -68,12 +74,20 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 
 	@Override
 	public boolean canServe(final URI uriSchema) {
-		return false;
+		return URIUtils.canServeURI(uriSchema,SERVE);
 	}
 
 	@Override
-	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
-		return null;
+	public FileSystemInterface newInstance(final URI uriSchema) throws EnvironmentException {
+		if (!canServe(uriSchema)) {
+			throw new EnvironmentException("Resource URI ["+uriSchema+"] is not supported by the class. Valid URI must be ["+SERVE+"...]");
+		}
+		else {
+			try{return new FileSystemOnGitHub(URI.create(uriSchema.getRawSchemeSpecificPart()));
+			} catch (IOException e) {
+				throw new EnvironmentException(e.getLocalizedMessage(),e);
+			}
+		}
 	}
 	
 	@Override
@@ -84,6 +98,79 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 	@Override
 	public DataWrapperInterface createDataWrapper(final URI actualPath) throws IOException {
 		return new GitHubDataWrapper(actualPath,URI.create(rootPath.getSchemeSpecificPart()));
+	}
+
+	@Override
+	public String getClassName() {
+		return this.getClass().getSimpleName();
+	}
+
+	@Override
+	public String getVersion() {
+		return PureLibSettings.CURRENT_VERSION;
+	}
+
+	@Override
+	public URI getLocalizerAssociated() {
+		return PureLibLocalizer.LOCALIZER_SCHEME_URI;
+	}
+
+	@Override
+	public String getDescriptionId() {
+		return DESCRIPTION;
+	}
+
+	@Override
+	public Icon getIcon() {
+		return ICON;
+	}
+	
+	@Override
+	public String getVendorId() {
+		return VENDOR;
+	}
+
+	@Override
+	public String getLicenseId() {
+		return LICENSE;
+	}
+
+	@Override
+	public String getLicenseContentId() {
+		return LICENSE_CONTENT;
+	}
+
+	@Override
+	public String getHelpId() {
+		return HELP;
+	}
+
+	@Override
+	public URI getUriTemplate() {
+		return SERVE;
+	}
+	
+	@Override
+	public FileSystemInterface getInstance() throws EnvironmentException {
+		return this;
+	}
+
+	@Override
+	public boolean testConnection(final URI connection, final LoggerFacade logger) throws IOException {
+		if (connection == null) {
+			throw new NullPointerException("Connection to test can't be null");
+		}
+		else {
+			try(final FileSystemInterface	inst  = newInstance(connection)) {
+				
+				return inst.exists();
+			} catch (EnvironmentException e) {
+				if (logger != null) {
+					logger.message(Severity.error, e, "Error testing connection [%1$s]: %2$s",connection,e.getLocalizedMessage());
+				}
+				throw new IOException(e.getLocalizedMessage(),e);
+			}
+		}
 	}
 	
 	private static class GitHubDataWrapper implements DataWrapperInterface {
