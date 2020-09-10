@@ -48,5 +48,6 @@
   	<module>filesystems.git</module>
   	<module>filesystems.s3</module>
   	<module>filesystems.webdav</module>
+  	<module>filesystems.github</module>
   </modules>
 </project>

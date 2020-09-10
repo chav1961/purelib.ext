@@ -1,4 +1,4 @@
-package chav1961.purelib.fsys;
+package chav1961.purelib.ext.fsys.github;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,14 +7,33 @@ import java.net.URI;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import chav1961.purelib.basic.Utils;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import chav1961.purelib.basic.exceptions.EnvironmentException;
+import chav1961.purelib.ext.fsys.github.internal.PureLibClient;
+import chav1961.purelib.fsys.AbstractFileSystem;
+import chav1961.purelib.fsys.FileSystemFactory;
+import chav1961.purelib.fsys.FileSystemInMemory;
 import chav1961.purelib.fsys.interfaces.DataWrapperInterface;
 import chav1961.purelib.fsys.interfaces.FileSystemInterface;
-import chav1961.purelib.streams.interfaces.JsonSaxHandler;
 
 public class FileSystemOnGitHub extends AbstractFileSystem {
+	public static final URI		SERVE = URI.create(FileSystemInterface.FILESYSTEM_URI_SCHEME+":github:");
+	
+	private static final String	DESCRIPTION = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_DESCRIPTION_SUFFIX;
+	private static final String	VENDOR = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_VENDOR_SUFFIX;
+	private static final String	LICENSE = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_SUFFIX;
+	private static final String	LICENSE_CONTENT = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_CONTENT_SUFFIX;
+	private static final String	HELP = FileSystemFactory.FILESYSTEM_LOCALIZATION_PREFIX+'.'+FileSystemInMemory.class.getSimpleName()+'.'+FileSystemFactory.FILESYSTEM_LICENSE_HELP_SUFFIX;
+	private static final Icon	ICON = new ImageIcon(FileSystemInMemory.class.getResource("memoryIcon.png"));
+
+	static {
+		PureLibClient.registerInPureLib();
+	}
+	
 	private final URI	rootPath;
+	
 	/**
 	 * <p>This constructor is an entry for the SPI service only. Don't use it in any purposes</p> 
 	 */
@@ -47,6 +66,16 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 		this.rootPath = another.rootPath;
 	}
 
+	@Override
+	public boolean canServe(final URI uriSchema) {
+		return false;
+	}
+
+	@Override
+	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
+		return null;
+	}
+	
 	@Override
 	public FileSystemInterface clone() {
 		return new FileSystemOnGitHub(this);
@@ -118,15 +147,5 @@ public class FileSystemOnGitHub extends AbstractFileSystem {
 		@Override
 		public void linkAttributes(Map<String, Object> attributes) throws IOException {
 		}
-	}
-
-	@Override
-	public boolean canServe(URI uriSchema) {
-		return false;
-	}
-
-	@Override
-	public FileSystemInterface newInstance(URI uriSchema) throws EnvironmentException {
-		return null;
 	}
 }
