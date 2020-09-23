@@ -31,14 +31,9 @@
   
 	<dependencies>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.chav1961</groupId>
             <artifactId>purelib</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.4</version>
         </dependency>
 	</dependencies>
   
@@ -49,5 +44,7 @@
   	<module>filesystems.s3</module>
   	<module>filesystems.webdav</module>
   	<module>filesystems.github</module>
+  	<module>starter.github</module>
+  	<module>nanoservice.servlet</module>
   </modules>
 </project>
