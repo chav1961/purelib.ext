@@ -5,12 +5,11 @@
 	 <version>0.0.1-SNAPSHOT</version>
 	 <packaging>pom</packaging>
 	 <name>Pure lib ext</name>
-	 <description>Pure libraray extensionDistributed smart house based in EPS826</description>
+	 <description>Pure libraray extension</description>
 
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <pg-jdbc-version>9.1-901-1.jdbc4</pg-jdbc-version>
-	    <tools-path>C:\Program Files\Java\jdk1.8.0_31\lib\tools.jar</tools-path>
 	    <project.parent.version>0.0.1-SNAPSHOT</project.parent.version>
 	</properties>
 
@@ -30,21 +29,28 @@
     </repositories>
   
 	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
-            <groupId>com.github.chav1961</groupId>
-            <artifactId>purelib</artifactId>
-            <version>0.0.5</version>
+		<groupId>com.github.chav1961</groupId>
+		<artifactId>purelib</artifactId>
+		<version>0.0.5</version>
         </dependency>
 	</dependencies>
   
   <modules>
   	<module>filesystems.svn</module>
   	<module>filesystems.rest</module>
-  	<module>filesystems.git</module>
   	<module>filesystems.s3</module>
   	<module>filesystems.webdav</module>
-  	<module>filesystems.github</module>
-  	<module>starter.github</module>
   	<module>nanoservice.servlet</module>
+  	<module>javax.comm.basic</module>
+  	<module>javax.comm.fazecast</module>
+   	<module>filesystems.git</module>
+  	<module>filesystems.github</module>
   </modules>
 </project>
