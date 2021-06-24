@@ -49,7 +49,6 @@
   	<module>filesystems.webdav</module>
   	<module>nanoservice.servlet</module>
   	<module>javax.comm.basic</module>
-  	<module>javax.comm.fazecast</module>
    	<module>filesystems.git</module>
   	<module>filesystems.github</module>
   </modules>
