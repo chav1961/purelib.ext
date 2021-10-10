@@ -181,6 +181,24 @@ public class FileSystemOnSvn extends AbstractFileSystem {
 		public void setName(final String name) throws IOException {
 			throw new IOException("ReadOnly");
 		}
+
+		@Override
+		public boolean tryLock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void lock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void unlock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
     private AuthManager createAuthManager(final SVNURL url, final String authUser, final File sshKeyFile, final char[] sshKeyPassword, final char[] authPassword, final File svnServerCertFile) {

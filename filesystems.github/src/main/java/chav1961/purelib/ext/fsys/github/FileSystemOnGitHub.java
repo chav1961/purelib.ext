@@ -234,5 +234,23 @@ public class FileSystemOnGitHub extends AbstractFileSystem implements FileSystem
 		@Override
 		public void linkAttributes(Map<String, Object> attributes) throws IOException {
 		}
+
+		@Override
+		public boolean tryLock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void lock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void unlock(String path, boolean sharedMode) throws IOException {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }
