@@ -7,13 +7,6 @@
   </parent>
   <artifactId>filesystems.git</artifactId>
 
-	<dependencies>
-        <dependency>
-		<groupId>com.github.chav1961</groupId>
-		<artifactId>purelib</artifactId>
-		<version>0.0.5</version>
-        </dependency>
-	</dependencies>
 
      <build>
        <finalName>purelib.ext.filesystems.git-0.0.1-SNAPSHOT</finalName>

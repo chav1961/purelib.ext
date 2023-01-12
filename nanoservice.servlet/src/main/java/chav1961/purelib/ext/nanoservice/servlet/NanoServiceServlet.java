@@ -1,6 +1,7 @@
 package chav1961.purelib.ext.nanoservice.servlet;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
@@ -14,6 +15,7 @@ import chav1961.purelib.basic.AbstractLoggerFacade;
 import chav1961.purelib.basic.PureLibSettings;
 import chav1961.purelib.basic.SubstitutableProperties;
 import chav1961.purelib.basic.exceptions.ContentException;
+import chav1961.purelib.basic.exceptions.EnvironmentException;
 import chav1961.purelib.basic.interfaces.LoggerFacade;
 import chav1961.purelib.basic.interfaces.LoggerFacade.Severity;
 import chav1961.purelib.nanoservice.NanoServiceFactory;
@@ -103,6 +105,18 @@ public class NanoServiceServlet extends HttpServlet {
 			else {
 				context.log(text);
 			}
+		}
+
+		@Override
+		public boolean canServe(URI resource) throws NullPointerException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public LoggerFacade newInstance(URI resource) throws EnvironmentException, NullPointerException, IllegalArgumentException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	};
 
